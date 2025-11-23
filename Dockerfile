@@ -1,11 +1,14 @@
-# Use nginx lightweight base image
+# Use Nginx as the web server
 FROM nginx:alpine
 
-# Copy your HTML file to the default Nginx web directory
-COPY index.html /usr/share/nginx/html/
+# Remove default Nginx HTML files
+RUN rm -rf /usr/share/nginx/html/*
 
-# Expose port 80 (default web port)
+# Copy all project files (HTML, CSS, JS) into Nginx web root
+COPY . /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 80
 
-# Default command to run Nginx
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
